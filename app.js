@@ -5,7 +5,9 @@ const { Sequelize,  DataTypes } = require('sequelize');
 const PORT= process.env.PORT || 9091
 console.log(process.env.PORT)
 app.use(express.json());
-// app.set('view engine', 'ejs')
+
+//template engine
+app.set('view engine', 'ejs')
 
 
 const sequelize = new Sequelize(process.env.DATABASE, process.env.MYSQLUSERNAME, process.env.MYSQLPASSWORD, {
@@ -117,6 +119,28 @@ app.get("/api/getAll",async(req,res)=>{
 
 
 })
+
+
+///////////////    template engine  /////////////
+app.get("/home",async(req,res)=>{
+
+  try{
+    const subject = await Assignment.findAll();
+    
+    res.render("temp", { data: subject, heading: "Assignments" });
+   
+
+  }
+  catch(err){
+
+    res.json({message:"Error",data:err})
+
+  }
+
+
+})
+
+
 // updating qurery
 
 // app.put("/api/update/:id", async(req,res)=>{
